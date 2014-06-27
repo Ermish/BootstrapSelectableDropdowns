@@ -17,9 +17,7 @@ TODO: Add code here
 
 ## How do I use it?
 
-It's really easy! 
-
-1. I just haven't documented it yet :(
+Hop on over to http://ermish.github.io/bootstrap-selectabledropdown for documentation.
 
 ##  Copyright and Licensing
 
