@@ -1,4 +1,4 @@
-#Bootstrap Selectable Dropdowns
+#bootstrap-selectabledropdown
 
 
 ## What is it?
