@@ -15,140 +15,38 @@
 // 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 (function($) {
-    $.fn.endlessScroll = function() {
+    "use strict";
 
-        //////private variables
-        var plugin        = this;
-        var jqueryElement = this;
+    function setup(element, userSettings) {
+        var settings = $.extend({}, $.fn.defaultSettings, userSettings); //Merge default defaultSettings with the user defaultSettings
 
-        ///////public variables
-        plugin.currentlyScrolling = false;
+        element.on('click', 'li', function(){
+            var currentElement = $(this);
 
-        //Default settings
-        plugin.settings = {
-            pageStart      : 0,
-            pageSize       : 25,
-            heightBuffer   : 50,
-            smartScrolling : true,
-            loadingHtml    : '<div class="scrollLoading">Loading more...</div>',
-            url            : "",
-            data           : {},
-            requestType    : "GET",
-            customFunction : ""
-        };
+            var optionContent = currentElement.find('a').text();
+            var carot = settings.useCarot ? ' <span class="caret"></span>' : '';
+
+            element.find('.dropdown-toggle').html(optionContent + carot);
+        });
+    };
 
 
-        //////Public Methods
-        plugin.setup = function(userSettings) {
+    $.fn.defaultSettings = {
+        useCarot: true
+    };
 
-            plugin.settings = $.extend({}, plugin.settings, userSettings); //Merge default settings with the user settings
+    $.fn.selectableDropdown = function() {
 
-            enableScrolling();
+        var args = Array.prototype.slice.call(arguments, 0);
+        var userSettings = args.length === 0 ? {} : $.extend({}, args[0]);
 
-            if(plugin.settings.smartScrolling == true) //Setup Smart Scrolling
-            {
-                //This is a "safer" version of setInterval
-                function startInterval(){
-                    if(plugin.currentlyScrolling == false && inScrollPosition() == true)
-                        plugin.scroll();
-
-                    window.setTimeout(startInterval, 200); //repeat the same code
-                }
-                startInterval();
-            }
-            else  //Or Setup normal scroll detection
-            {
-                $(window).scroll(function () {
-                     if(plugin.currentlyScrolling == false && inScrollPosition() == true)
-                     plugin.scroll();
-                 });
-            }
-
-            return this; //So jquery chaining will still work
-        };
-
-        //Where the magic happens!
-        plugin.scroll = function() {
-
-            disableScrolling();
-
-            //If user defined a function, use that instead
-            if(plugin.settings.customFunction != ""){
-
-                plugin.settings.customFunction(plugin.settings.pageStart, getPageEnd(), plugin.settings.data); //call the function
-                enableScrolling();
-                incrementPage();
-                return this; //So jquery chaining will still work
-            }
-
-            //Check if user is using Ajax
-            if(plugin.settings.url != ""){
-                //Build out the ajax data (Note: the parameters are sorted alphabetically)
-                var pagingData = { pageStart: plugin.settings.pageStart, pageEnd: getPageEnd() };
-                var ajaxData = $.extend(pagingData, plugin.settings.data);
-
-                //Make the call, Ajax!
-                $.ajax({
-                    type: plugin.settings.requestType,
-                    url : plugin.settings.url,
-                    data: ajaxData,
-                    success:function(data){
-                        jqueryElement.append(data);
-                        enableScrolling();
-                        incrementPage();
-                    },
-                    error:function(){
-                        jqueryElement.append('<div class="scrollError" style="position: fixed; bottom: 0; right: 0; font-weight: bold; font-size: 20px; border: 2px;">Error loading data.</div>');
-
-                        var errorPopup = $('.scrollError');
-                        errorPopup.fadeOut(3000);
-                        setTimeout(function(){
-                            errorPopup.remove();
-                        }, 3000);
-                    }
-                });
-            }
-
-            return this; //So jquery chaining will still work
-        };
+        this.each(function(){
+            var currentElement = $(this);
 
 
+            setup(currentElement, userSettings);
+        });
 
-        //////Private Methods
-        var enableScrolling = function(){
-            $('.scrollLoading').remove();
-            jqueryElement.append('<div class="scrollActivator">&nbsp;</div>');
-            plugin.currentlyScrolling = false;
-        };
-
-        var disableScrolling = function(){
-            plugin.currentlyScrolling = true;
-            jqueryElement.find('.scrollActivator').remove();
-            jqueryElement.after(plugin.settings.loadingHtml);
-        };
-
-        var incrementPage = function() {
-            plugin.settings.pageStart += plugin.settings.pageSize;
-        };
-
-        var getPageEnd = function(){
-            return (plugin.settings.pageStart + plugin.settings.pageSize);
-        };
-
-        var inScrollPosition = function(){
-            var pageHeight = $(window).height() + $(window).scrollTop();
-
-            var activator       = plugin.find('.scrollActivator');
-
-            if(typeof activator === 'undefined')
-                return false;
-
-            var activatorHeight = activator.offset().top;
-            var heightBuffer    = ($(document).height() - activatorHeight) * ( (plugin.settings.heightBuffer + .001) / 100);
-            var bufferedActivatorHeight = activatorHeight + heightBuffer;
-
-            return bufferedActivatorHeight <= pageHeight && activator.is(':visible');
-        };
 
         return this;  //So jquery chaining will still work
     };
