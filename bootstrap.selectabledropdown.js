@@ -17,16 +17,18 @@
 (function($) {
     "use strict";
 
-    function setup(element, userSettings) {
-        var settings = $.extend({}, $.fn.defaultSettings, userSettings); //Merge default defaultSettings with the user defaultSettings
+    function initialize(element, userSettings) {
+        var settings = $.extend({}, $.fn.defaultSettings, userSettings); //Merge default Settings with the user Settings
 
-        element.on('click', 'li', function(){
+        var dropdownElements = element.find('li');
+
+        dropdownElements.on('click', function(){
             var currentElement = $(this);
 
-            var optionContent = currentElement.find('a').text();
-            var carot = settings.useCarot ? ' <span class="caret"></span>' : '';
+            var optionContent = currentElement.find('a').text(); //Get option text
+            var carot = settings.useCarot ? ' <span class="caret"></span>' : ''; //Add carot
 
-            element.find('.dropdown-toggle').html(optionContent + carot);
+            element.find('.dropdown-toggle').html(optionContent + carot); //update button text
         });
     };
 
@@ -37,14 +39,20 @@
 
     $.fn.selectableDropdown = function() {
 
+        //Get user passed in settings
         var args = Array.prototype.slice.call(arguments, 0);
         var userSettings = args.length === 0 ? {} : $.extend({}, args[0]);
 
+        //apply to each element
         this.each(function(){
             var currentElement = $(this);
 
+            //if dropdown list isn't a child, try to move up a level
+            currentElement  = currentElement.find('li').length
+                              ? currentElement
+                              : currentElement.parent();
 
-            setup(currentElement, userSettings);
+            initialize(currentElement, userSettings);
         });
 
 
@@ -52,3 +60,7 @@
     };
 
 })(jQuery);
+
+$(document).ready(function(){
+    $('.selectable-dropdown').selectableDropdown(); //apply to class
+});
