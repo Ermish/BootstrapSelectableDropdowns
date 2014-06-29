@@ -68,8 +68,8 @@
             <p>Now the dropdown is selectable!</p>
             <div class="row">
                 <div class="col-lg-4">
-                    <div class="input-group">
-                        <div class="input-group-btn selectable-dropdown">
+                    <div id="dropdown" class="input-group">
+                        <div class="input-group-btn">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                 Action <span class="caret"></span>
                             </button>
@@ -86,12 +86,12 @@
                 </div><!-- /.col-lg-6 -->
             </div>
 
+            <br><br><br>
+
+            It works on all the different options bootstrap has available.
+
+
             <br><br>
-
-            It works on all the different options bootstrap has available
-
-
-<br><br>
 
             <p>Appended</p>
             <div class="row">
@@ -118,8 +118,8 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="input-group">
-                        <div class="input-group-btn selectable-dropdown">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle selectable-dropdown" data-toggle="dropdown">
                                 Action <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
@@ -136,10 +136,10 @@
             </div>
 
 
-                Just add the class selectable-dropdown to a surrounding div or the after the dropdown-toggle class.
+            Just add the class selectable-dropdown to a surrounding div or on the button itself.
 
-                You can also add through javascript:
-                $('.my-dropdown').selectableDropdown();
+            You can also add through javascript:
+            $('.my-dropdown').selectableDropdown();
 
             </div>
         </div>
@@ -151,7 +151,7 @@
     <script type="text/javascript" src="bootstrap.selectabledropdown.js"></script>
     <script>
         $(document).ready(function(){
-            $('.selectable-dropdown').selectableDropdown({
+            $('#dropdown').selectableDropdown({
                 useCarot: true
             });
         });
