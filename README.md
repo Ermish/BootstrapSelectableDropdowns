@@ -3,9 +3,9 @@
 
 ## What is it?
 
-Bootstrap offers dropdowns that can be appended or prepended to any input element. These dropdowns are only links and do not update the dropdown "button".
+Bootstrap offers dropdowns that can be appended or prepended to any input element. When you click on a dropdown option, the "selected" value does not change.
 
-This makes that dream become a reality!
+This simple and compact plugin makes that happen!
 
 ## How do I use it?
 
