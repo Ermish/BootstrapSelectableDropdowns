@@ -3,21 +3,13 @@
 
 ## What is it?
 
-Bootstrap offers dropdowns that can be appended or prepended to any input element. 
+Bootstrap offers dropdowns that can be appended or prepended to any input element. These dropdowns are only links and do not update the dropdown "button".
 
-```
-Add bootstrap demonstration
-```
-
-This makes them selectable options like so:
-
-```
-TODO: Add code here
-```
+This makes that dream become a reality!
 
 ## How do I use it?
 
-Hop on over to http://ermish.github.io/bootstrap-selectabledropdown for documentation.
+Hop on over to http://ermish.github.io/bootstrap-selectabledropdown for documentation and examples.
 
 ##  Copyright and Licensing
 
