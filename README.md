@@ -9,7 +9,7 @@ This simple and compact plugin makes that happen!
 
 ## How do I use it?
 
-Hop on over to http://ermish.github.io/bootstrap-selectabledropdown for documentation and examples.
+Head over to http://ermish.github.io/bootstrap-selectabledropdown for documentation and examples.
 
 ##  Copyright and Licensing
 
